@@ -4,9 +4,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const API_BASE = 'https://app.nocodb.com/api/v3/data/pp2zrs2rk71l250/m3qe8h6r9053bse';
-const API_TOKEN = 'zlbClCcVqqRclQ4BnokVIs1Z6IVGFeBm0kRZ4ECv';
+// 🔗 NocoDB Configuration from environment variables
+const API_BASE = import.meta.env.VITE_NOCODB_API_BASE;
+const API_TOKEN = import.meta.env.VITE_NOCODB_API_TOKEN;
 
+// Validate environment variables
+if (!API_BASE || !API_TOKEN) {
+  console.error('❌ Missing NocoDB configuration. Please check your .env.local file.');
+  console.error('Required variables: VITE_NOCODB_API_BASE, VITE_NOCODB_API_TOKEN');
+}
+
+// 📡 Headers for all API requests
 const headers = {
   'xc-token': API_TOKEN,
   'Accept': 'application/json',
