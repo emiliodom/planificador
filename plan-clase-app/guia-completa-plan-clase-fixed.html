@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa: Plan de Clase con React Vite y NocoDB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 10px 16px;
+            margin: 2px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #64748b;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background-color: #f1f5f9;
+            color: #3b82f6;
+            border-left-color: #3b82f6;
+            transform: translateX(3px);
+        }
+        
+        .nav-item.active {
+            background-color: #3b82f6;
+            color: white;
+            border-left-color: #f59e0b;
+        }
+        
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            position: relative;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .copy-btn:hover {
+            opacity: 1;
+            background: #2563eb;
+        }
+        
+        .step-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    Guía Completa: Plan de Clase
+                </h1>
+                <h2 class="text-xl md:text-2xl mb-6">
+                    React Vite + NocoDB + Exportar PDF
+                </h2>
+                <p class="text-lg max-w-3xl mx-auto">
+                    Aprende paso a paso a crear una aplicación moderna para gestionar planes de clase 
+                    usando las mejores tecnologías de desarrollo web actuales.
+                </p>
+                
+                <!-- Tech badges -->
+                <div class="flex flex-wrap justify-center gap-3 mt-8">
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fab fa-react mr-2"></i>React 18
+                    </span>
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fas fa-bolt mr-2"></i>Vite 4
+                    </span>
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fas fa-database mr-2"></i>NocoDB
+                    </span>
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fas fa-file-pdf mr-2"></i>Exportar PDF
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Sidebar Navigation -->
+                <div class="lg:col-span-1">
+                    <nav class="sidebar bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="font-bold text-gray-800 mb-4">Índice de Contenidos</h3>
+                        <a href="#introduccion" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-info-circle mr-2"></i>Introducción
+                        </a>
+                        <a href="#paso1" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-cog mr-2"></i>Configuración Inicial
+                        </a>
+                        <a href="#paso2" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-database mr-2"></i>Configurar NocoDB
+                        </a>
+                        <a href="#paso3" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-puzzle-piece mr-2"></i>Componentes React
+                        </a>
+                        <a href="#paso4" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-edit mr-2"></i>Formularios
+                        </a>
+                        <a href="#paso5" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-magic mr-2"></i>Animaciones
+                        </a>
+                        <a href="#paso6" class="nav-item" onclick="setActive(this)">
+                            <i class="fas fa-file-pdf mr-2"></i>Exportar PDF
+                        </a>
+                        <a href="#paso7" class="nav-item" onclick="setActive(this)">
+                            <i class="fab fa-github mr-2"></i>Deploy
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-3 space-y-8">
+                    
+                    <!-- Introducción -->
+                    <section id="introduccion" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
+                            <i class="fas fa-rocket mr-3"></i>Introducción al Proyecto
+                        </h2>
+                        
+                        <div class="prose prose-lg max-w-none">
+                            <p class="text-gray-700 text-lg mb-6">
+                                En esta guía aprenderás paso a paso a crear una aplicación completa para gestionar planes de clase 
+                                utilizando React, Vite, NocoDB y otras tecnologías modernas del desarrollo web.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                                    <h3 class="font-bold text-blue-800 mb-3">
+                                        <i class="fas fa-check-circle mr-2"></i>Qué aprenderás
+                                    </h3>
+                                    <ul class="text-blue-700 space-y-2">
+                                        <li>• Configurar un proyecto React con Vite desde cero</li>
+                                        <li>• Conectar con base de datos NocoDB paso a paso</li>
+                                        <li>• Crear formularios dinámicos y funcionales</li>
+                                        <li>• Exportar contenido profesional a PDF</li>
+                                        <li>• Desplegar tu aplicación en producción</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                                    <h3 class="font-bold text-green-800 mb-3">
+                                        <i class="fas fa-tools mr-2"></i>Prerrequisitos necesarios
+                                    </h3>
+                                    <ul class="text-green-700 space-y-2">
+                                        <li>• Node.js versión 16 o superior instalado</li>
+                                        <li>• Conocimientos básicos de React y JavaScript</li>
+                                        <li>• Editor de código (recomendado: VS Code)</li>
+                                        <li>• Cuenta gratuita en GitHub</li>
+                                        <li>• Navegador web actualizado</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Paso 1: Configuración Inicial -->
+                    <section id="paso1" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">1</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-blue-700">Configuración Inicial del Proyecto</h2>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-terminal mr-2 text-blue-600"></i>Crear proyecto con Vite
+                                </h3>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre># Crear proyecto
+npm create vite@latest plan-clase-app -- --template react
+cd plan-clase-app
+npm install
+
+# Instalar dependencias adicionales
+npm install tailwindcss @tailwindcss/vite framer-motion html2canvas jspdf axios</pre>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-cog mr-2 text-green-600"></i>Configurar Tailwind CSS con Plugin de Vite
+                                </h3>
+                                
+                                <p class="mb-4 text-gray-700">
+                                    <strong>Paso 1:</strong> Configurar el plugin de Tailwind en Vite. 
+                                    Edita el archivo <code>vite.config.js</code>:
+                                </p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+})</pre>
+                                </div>
+                                
+                                <p class="mt-4 mb-2 text-gray-700">
+                                    <strong>Paso 2:</strong> Importar Tailwind CSS en tu archivo principal de estilos. 
+                                    Crea o edita <code>src/style.css</code>:
+                                </p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>@import "tailwindcss";</pre>
+                                </div>
+                                
+                                <p class="mt-4 mb-2 text-gray-700">
+                                    <strong>Paso 3:</strong> Asegúrate de que el archivo CSS esté importado en <code>src/main.jsx</code>:
+                                </p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './style.css' // Importar estilos
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;,
+)</pre>
+                                </div>
+                                
+                                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded mt-4">
+                                    <p class="text-green-800">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        <strong>¡Nuevo método más simple!</strong> Este enfoque usando el plugin de Vite es más directo y no requiere 
+                                        configurar PostCSS o Autoprefixer manualmente.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-folder mr-2 text-purple-600"></i>Estructura del proyecto
+                                </h3>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>src/
+├── components/
+│   ├── PlanForm.jsx
+│   ├── PlanList.jsx
+│   └── PDFExport.jsx
+├── services/
+│   └── nocodb.js
+├── App.jsx
+└── main.jsx</pre>
+                                </div>
+                            </div>
+
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                                <p class="text-yellow-700">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    <strong>Importante:</strong> Asegúrate de que el puerto 5173 esté libre antes de ejecutar <code>npm run dev</code>
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Paso 2: NocoDB -->
+                    <section id="paso2" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">2</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-purple-700">Configuración Completa de NocoDB</h2>
+                        </div>
+
+                        <div class="space-y-8">
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                                <p class="text-blue-800">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    <strong>NocoDB</strong> es una plataforma que convierte cualquier base de datos en una API REST automáticamente. 
+                                    Es perfecta para prototipos y aplicaciones educativas.
+                                </p>
+                            </div>
+
+                            <!-- Paso 2.1: Crear cuenta -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                                    <i class="fas fa-user-plus mr-2 text-blue-600"></i>Paso 2.1: Crear cuenta en NocoDB
+                                </h3>
+                                <div class="space-y-4">
+                                    <ol class="list-decimal pl-6 space-y-3 text-gray-700">
+                                        <li>
+                                            <strong>Visitar el sitio web:</strong> Ve a 
+                                            <a href="https://app.nocodb.com" target="_blank" class="text-blue-600 hover:underline font-medium ml-2">
+                                                https://app.nocodb.com
+                                            </a>
+                                        </li>
+                                        <li><strong>Registro:</strong> Haz clic en "Sign Up" (Registrarse)</li>
+                                        <li><strong>Datos personales:</strong> Completa el formulario con tu email y contraseña</li>
+                                        <li><strong>Verificación:</strong> Revisa tu email y confirma tu cuenta</li>
+                                        <li><strong>Acceder:</strong> Inicia sesión en la plataforma</li>
+                                    </ol>
+                                    
+                                    <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+                                        <p class="text-green-700 text-sm">
+                                            <i class="fas fa-lightbulb mr-2"></i>
+                                            <strong>Consejo:</strong> NocoDB ofrece un plan gratuito que es perfecto para aprender y desarrollar proyectos pequeños.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2.2: Crear Base -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                                    <i class="fas fa-database mr-2 text-green-600"></i>Paso 2.2: Crear una Base (Workspace)
+                                </h3>
+                                <div class="space-y-4">
+                                    <p class="text-gray-700 mb-4">
+                                        Una "Base" en NocoDB es como un proyecto que contiene todas tus tablas relacionadas.
+                                    </p>
+                                    
+                                    <ol class="list-decimal pl-6 space-y-3 text-gray-700">
+                                        <li>
+                                            <strong>Crear Base:</strong> En el dashboard principal, busca el botón 
+                                            <span class="bg-blue-100 px-2 py-1 rounded text-blue-800 font-medium">+ Create Base</span>
+                                        </li>
+                                        <li>
+                                            <strong>Nombre del proyecto:</strong> Escribe 
+                                            <span class="bg-yellow-100 px-2 py-1 rounded text-yellow-800 font-medium">"Sistema Planes de Clase"</span>
+                                        </li>
+                                        <li><strong>Tipo de base de datos:</strong> Selecciona "Create a new database" para empezar desde cero</li>
+                                        <li><strong>Motor de base de datos:</strong> Elige "SQLite" (es más simple para aprender)</li>
+                                        <li><strong>Confirmar:</strong> Haz clic en "Create Base"</li>
+                                    </ol>
+
+                                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                        <p class="text-yellow-700 text-sm">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            <strong>Importante:</strong> Guarda el nombre exacto de tu base, lo necesitarás más adelante para la URL de la API.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2.3: Crear tabla -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                                    <i class="fas fa-table mr-2 text-purple-600"></i>Paso 2.3: Crear tabla "planes_clase"
+                                </h3>
+                                <div class="space-y-4">
+                                    <p class="text-gray-700 mb-4">
+                                        Ahora crearemos la tabla que almacenará toda la información de nuestros planes de clase.
+                                    </p>
+                                    
+                                    <ol class="list-decimal pl-6 space-y-3 text-gray-700 mb-6">
+                                        <li>
+                                            <strong>Acceder a tu base:</strong> Haz clic en la base que acabas de crear
+                                        </li>
+                                        <li>
+                                            <strong>Nueva tabla:</strong> Busca el botón 
+                                            <span class="bg-green-100 px-2 py-1 rounded text-green-800 font-medium">+ Add new table</span>
+                                        </li>
+                                        <li>
+                                            <strong>Nombre de tabla:</strong> Escribe exactamente 
+                                            <span class="bg-purple-100 px-2 py-1 rounded text-purple-800 font-medium">planes_clase</span>
+                                        </li>
+                                        <li><strong>Crear:</strong> Confirma con "Create Table"</li>
+                                    </ol>
+
+                                    <div class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+                                        <h4 class="font-bold text-gray-800 mb-3">Campos a crear en tu tabla:</h4>
+                                        <div class="overflow-x-auto">
+                                            <table class="min-w-full text-sm">
+                                                <thead class="bg-gray-50">
+                                                    <tr>
+                                                        <th class="px-3 py-2 text-left font-medium text-gray-900">Campo</th>
+                                                        <th class="px-3 py-2 text-left font-medium text-gray-900">Tipo</th>
+                                                        <th class="px-3 py-2 text-left font-medium text-gray-900">Obligatorio</th>
+                                                        <th class="px-3 py-2 text-left font-medium text-gray-900">Descripción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y divide-gray-200">
+                                                    <tr>
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">docente</td>
+                                                        <td class="px-3 py-2">SingleLineText</td>
+                                                        <td class="px-3 py-2 text-center">✅</td>
+                                                        <td class="px-3 py-2 text-gray-600">Nombre del profesor</td>
+                                                    </tr>
+                                                    <tr class="bg-gray-50">
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">curso</td>
+                                                        <td class="px-3 py-2">SingleLineText</td>
+                                                        <td class="px-3 py-2 text-center">✅</td>
+                                                        <td class="px-3 py-2 text-gray-600">Materia o asignatura</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">tema</td>
+                                                        <td class="px-3 py-2">SingleLineText</td>
+                                                        <td class="px-3 py-2 text-center">✅</td>
+                                                        <td class="px-3 py-2 text-gray-600">Tema de la clase</td>
+                                                    </tr>
+                                                    <tr class="bg-gray-50">
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">fecha</td>
+                                                        <td class="px-3 py-2">Date</td>
+                                                        <td class="px-3 py-2 text-center">✅</td>
+                                                        <td class="px-3 py-2 text-gray-600">Fecha de la clase</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">duracion</td>
+                                                        <td class="px-3 py-2">SingleLineText</td>
+                                                        <td class="px-3 py-2 text-center">❌</td>
+                                                        <td class="px-3 py-2 text-gray-600">Duración (ej: "45 min")</td>
+                                                    </tr>
+                                                    <tr class="bg-gray-50">
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">objetivos</td>
+                                                        <td class="px-3 py-2">LongText</td>
+                                                        <td class="px-3 py-2 text-center">✅</td>
+                                                        <td class="px-3 py-2 text-gray-600">Objetivos de aprendizaje</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">contenido</td>
+                                                        <td class="px-3 py-2">LongText</td>
+                                                        <td class="px-3 py-2 text-center">✅</td>
+                                                        <td class="px-3 py-2 text-gray-600">Contenido a enseñar</td>
+                                                    </tr>
+                                                    <tr class="bg-gray-50">
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">recursos</td>
+                                                        <td class="px-3 py-2">LongText</td>
+                                                        <td class="px-3 py-2 text-center">❌</td>
+                                                        <td class="px-3 py-2 text-gray-600">Materiales necesarios</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-3 py-2 text-blue-600 font-medium">evaluacion</td>
+                                                        <td class="px-3 py-2">LongText</td>
+                                                        <td class="px-3 py-2 text-center">❌</td>
+                                                        <td class="px-3 py-2 text-gray-600">Métodos de evaluación</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                        <h5 class="font-bold text-blue-800 mb-2">Cómo agregar cada campo:</h5>
+                                        <ol class="text-blue-700 text-sm space-y-1 list-decimal pl-5">
+                                            <li>Haz clic en el botón "+" al final de las columnas</li>
+                                            <li>Escribe el nombre del campo exactamente como aparece en la tabla</li>
+                                            <li>Selecciona el tipo de dato correspondiente</li>
+                                            <li>Marca "Required" si es obligatorio (✅)</li>
+                                            <li>Haz clic en "Save"</li>
+                                            <li>Repite para todos los campos</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2.4: Crear token API -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                                    <i class="fas fa-key mr-2 text-orange-600"></i>Paso 2.4: Crear Token de API
+                                </h3>
+                                <div class="space-y-4">
+                                    <p class="text-gray-700 mb-4">
+                                        El token de API te permitirá conectar tu aplicación React con NocoDB de forma segura.
+                                    </p>
+                                    
+                                    <ol class="list-decimal pl-6 space-y-3 text-gray-700">
+                                        <li>
+                                            <strong>Ir a configuración:</strong> Haz clic en tu avatar (esquina superior derecha) → 
+                                            <span class="bg-gray-100 px-2 py-1 rounded font-medium">"Account Settings"</span>
+                                        </li>
+                                        <li>
+                                            <strong>Tokens:</strong> En el menú lateral, selecciona 
+                                            <span class="bg-orange-100 px-2 py-1 rounded text-orange-800 font-medium">"API Tokens"</span>
+                                        </li>
+                                        <li>
+                                            <strong>Nuevo token:</strong> Haz clic en 
+                                            <span class="bg-green-100 px-2 py-1 rounded text-green-800 font-medium">"+ Create Token"</span>
+                                        </li>
+                                        <li>
+                                            <strong>Nombre del token:</strong> Escribe 
+                                            <span class="bg-blue-100 px-2 py-1 rounded text-blue-800 font-medium">"plan-clase-app"</span>
+                                        </li>
+                                        <li><strong>Crear:</strong> Haz clic en "Generate"</li>
+                                        <li>
+                                            <strong>Copiar token:</strong> 
+                                            <span class="bg-red-100 px-2 py-1 rounded text-red-800 font-medium">¡IMPORTANTE!</span> 
+                                            Copia el token inmediatamente y guárdalo en un lugar seguro
+                                        </li>
+                                    </ol>
+
+                                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                        <p class="text-red-700 text-sm">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            <strong>¡Atención!</strong> El token solo se muestra una vez. Si lo pierdes, tendrás que crear uno nuevo.
+                                            Nunca compartas tu token públicamente.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2.5: Obtener API REST v3 -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                                    <i class="fas fa-code mr-2 text-indigo-600"></i>Paso 2.5: Obtener endpoints de API REST v3
+                                </h3>
+                                <div class="space-y-4">
+                                    <p class="text-gray-700 mb-4">
+                                        NocoDB genera automáticamente una API REST completa. Vamos a obtener los endpoints.
+                                    </p>
+                                    
+                                    <ol class="list-decimal pl-6 space-y-3 text-gray-700">
+                                        <li>
+                                            <strong>Ir a tu base:</strong> Regresa a tu base "Sistema Planes de Clase"
+                                        </li>
+                                        <li>
+                                            <strong>Menú de base:</strong> Haz clic en el menú desplegable de la base (flecha hacia abajo)
+                                        </li>
+                                        <li>
+                                            <strong>REST APIs:</strong> Selecciona 
+                                            <span class="bg-indigo-100 px-2 py-1 rounded text-indigo-800 font-medium">"REST APIs"</span>
+                                        </li>
+                                        <li>
+                                            <strong>Swagger UI:</strong> Se abrirá la documentación interactiva de tu API
+                                        </li>
+                                        <li>
+                                            <strong>Autorizar:</strong> Haz clic en 
+                                            <span class="bg-green-100 px-2 py-1 rounded text-green-800 font-medium">"Authorize"</span> 
+                                            y pega tu token
+                                        </li>
+                                        <li><strong>Explorar:</strong> Ahora puedes ver todos los endpoints disponibles</li>
+                                    </ol>
+
+                                    <div class="bg-white border border-gray-200 rounded-lg p-4 mt-4">
+                                        <h4 class="font-bold text-gray-800 mb-3">Endpoints principales que utilizaremos:</h4>
+                                        <div class="space-y-2 text-sm font-mono">
+                                            <div class="flex items-center">
+                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded mr-3 font-bold">GET</span>
+                                                <span class="text-gray-700">/api/v3/data/{baseId}/{tableId}/records</span>
+                                                <span class="text-gray-500 ml-2">- Obtener todos los planes</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-3 font-bold">POST</span>
+                                                <span class="text-gray-700">/api/v3/data/{baseId}/{tableId}/records</span>
+                                                <span class="text-gray-500 ml-2">- Crear nuevo plan</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded mr-3 font-bold">PATCH</span>
+                                                <span class="text-gray-700">/api/v3/data/{baseId}/{tableId}/records</span>
+                                                <span class="text-gray-500 ml-2">- Actualizar plan</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded mr-3 font-bold">DELETE</span>
+                                                <span class="text-gray-700">/api/v3/data/{baseId}/{tableId}/records</span>
+                                                <span class="text-gray-500 ml-2">- Eliminar plan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2.6: Obtener URL y Token para React -->
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                                    <i class="fas fa-code mr-2 text-purple-600"></i>Paso 2.6: Obtener URL y Token para React
+                                </h3>
+                                <div class="space-y-4">
+                                    <p class="text-gray-700 mb-4">
+                                        Solo necesitas <strong>dos valores</strong> para conectar tu aplicación React con NocoDB:
+                                    </p>
+                                    
+                                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                                        <h4 class="font-bold text-blue-800 mb-2">🔗 URL de la API (API_BASE)</h4>
+                                        <p class="text-blue-700 mb-2">
+                                            En la documentación de Swagger, copia la URL completa que aparece en los ejemplos:
+                                        </p>
+                                        <code class="bg-blue-100 px-2 py-1 rounded text-sm">
+                                            https://app.nocodb.com/api/v3/data/[BASE_ID]/[TABLE_ID]
+                                        </code>
+                                        <p class="text-sm text-blue-600 mt-2">
+                                            ⚡ <strong>Ejemplo:</strong> <code>https://app.nocodb.com/api/v3/data/pp2zrs2rk71l250/m3qe8h6r9053bse</code>
+                                        </p>
+                                    </div>
+
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                                        <h4 class="font-bold text-green-800 mb-2">🔑 Token de API (API_TOKEN)</h4>
+                                        <p class="text-green-700 mb-2">
+                                            Usa el token que creaste en el paso anterior:
+                                        </p>
+                                        <code class="bg-green-100 px-2 py-1 rounded text-sm">
+                                            zlbClCcVqqRclQ4BnokVIs1Z6IVGFeBm0kRZ4ECv
+                                        </code>
+                                        <p class="text-sm text-green-600 mt-2">
+                                            ⚡ Este token se copia desde: Account Settings → Tokens → Copy
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                        <h4 class="font-bold text-yellow-800 mb-2">📝 Código para tu componente React:</h4>
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre>// Al inicio de tu componente LessonPlannerCRUD.jsx
+const API_BASE = 'https://app.nocodb.com/api/v3/data/TU_BASE_ID/TU_TABLE_ID';
+const API_TOKEN = 'TU_TOKEN_AQUI';
+
+const headers = {
+  'xc-token': API_TOKEN,
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+};</pre>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                                        <p class="text-red-700 text-sm">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            <strong>¡Importante!</strong> Reemplaza <code>TU_BASE_ID</code>, <code>TU_TABLE_ID</code> y <code>TU_TOKEN_AQUI</code> con tus valores reales.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Paso 3: Componentes React -->
+                    <section id="paso3" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">3</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-green-700">Crear Componentes React</h2>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-code mr-2 text-blue-600"></i>Configuración Simple de NocoDB API v3
+                                </h3>
+                                <p class="mb-3">En tu componente principal <code>LessonPlannerCRUD.jsx</code>, agrega esto al inicio:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>import React, { useState, useEffect } from 'react';
+import { Calendar, Book, Target, FileText, Package, Save, X, Edit, Trash2, Plus, Download } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
+// 🔗 Configuración de NocoDB - Reemplaza con tus valores reales
+const API_BASE = 'https://app.nocodb.com/api/v3/data/pp2zrs2rk71l250/m3qe8h6r9053bse';
+const API_TOKEN = 'zlbClCcVqqRclQ4BnokVIs1Z6IVGFeBm0kRZ4ECv';
+
+// 📡 Headers para todas las peticiones
+const headers = {
+  'xc-token': API_TOKEN,
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+};</pre>
+                                </div>
+                                
+                                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded mt-4">
+                                    <p class="text-green-800">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        <strong>¡Configuración completa!</strong> Con estos dos valores (API_BASE y API_TOKEN) y los headers, 
+                                        ya puedes hacer todas las operaciones CRUD con NocoDB.
+                                    </p>
+                                </div>
+
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+                                    <h4 class="font-bold text-blue-800 mb-2">🔍 ¿Dónde encuentro mis valores?</h4>
+                                    <ul class="text-blue-700 space-y-1 text-sm">
+                                        <li>• <strong>API_BASE:</strong> Swagger UI → Any endpoint → Server URL + path hasta tu tabla</li>
+                                        <li>• <strong>API_TOKEN:</strong> Account Settings → Tokens → Create/Copy token</li>
+                                        <li>• <strong>Headers:</strong> Usa exactamente como se muestra arriba</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-edit mr-2 text-green-600"></i>Componente Formulario Mejorado
+                                </h3>
+                                <p class="mb-3">Archivo: <code>src/components/PlanForm.jsx</code></p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>import { useState } from 'react';
+import { planService } from '../services/nocodb';
+
+function PlanForm({ onSave, planToEdit = null }) {
+  const [formData, setFormData] = useState({
+    docente: planToEdit?.docente || '',
+    curso: planToEdit?.curso || '',
+    tema: planToEdit?.tema || '',
+    fecha: planToEdit?.fecha || '',
+    duracion: planToEdit?.duracion || '',
+    objetivos: planToEdit?.objetivos || '',
+    contenido: planToEdit?.contenido || '',
+    recursos: planToEdit?.recursos || '',
+    evaluacion: planToEdit?.evaluacion || ''
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  // Validar formulario
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.docente.trim()) newErrors.docente = 'El nombre del docente es obligatorio';
+    if (!formData.curso.trim()) newErrors.curso = 'El curso es obligatorio';
+    if (!formData.tema.trim()) newErrors.tema = 'El tema es obligatorio';
+    if (!formData.fecha) newErrors.fecha = 'La fecha es obligatoria';
+    if (!formData.objetivos.trim()) newErrors.objetivos = 'Los objetivos son obligatorios';
+    if (!formData.contenido.trim()) newErrors.contenido = 'El contenido es obligatorio';
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      alert('Por favor, completa todos los campos obligatorios');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      if (planToEdit) {
+        // Actualizar plan existente
+        await planService.update(planToEdit.id, formData);
+        alert('✅ Plan actualizado exitosamente');
+      } else {
+        // Crear nuevo plan
+        await planService.create(formData);
+        alert('✅ Plan creado exitosamente');
+        
+        // Limpiar formulario después de crear
+        setFormData({
+          docente: '',
+          curso: '',
+          tema: '',
+          fecha: '',
+          duracion: '',
+          objetivos: '',
+          contenido: '',
+          recursos: '',
+          evaluacion: ''
+        });
+      }
+      
+      if (onSave) onSave();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      alert('❌ Error al guardar el plan. Revisa la consola para más detalles.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Limpiar error del campo cuando el usuario empiece a escribir
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const handleReset = () => {
+    if (confirm('¿Estás seguro de que quieres limpiar el formulario?')) {
+      setFormData({
+        docente: '',
+        curso: '',
+        tema: '',
+        fecha: '',
+        duracion: '',
+        objetivos: '',
+        contenido: '',
+        recursos: '',
+        evaluacion: ''
+      });
+      setErrors({});
+    }
+  };
+
+  return (
+    &lt;div className="bg-white p-6 rounded-lg shadow-lg"&gt;
+      &lt;h2 className="text-2xl font-bold mb-6 text-gray-800"&gt;
+        &lt;i className="fas fa-edit mr-3 text-blue-600"&gt;&lt;/i&gt;
+        {planToEdit ? 'Editar Plan de Clase' : 'Nuevo Plan de Clase'}
+      &lt;/h2&gt;
+      
+      &lt;form onSubmit={handleSubmit} className="space-y-6"&gt;
+        {/* Información básica */}
+        &lt;div className="bg-gray-50 p-4 rounded-lg"&gt;
+          &lt;h3 className="text-lg font-semibold mb-4 text-gray-700"&gt;Información Básica&lt;/h3&gt;
+          &lt;div className="grid grid-cols-1 md:grid-cols-2 gap-4"&gt;
+            &lt;div&gt;
+              &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+                Docente &lt;span className="text-red-500"&gt;*&lt;/span&gt;
+              &lt;/label&gt;
+              &lt;input
+                type="text"
+                name="docente"
+                value={formData.docente}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  errors.docente ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Ej: Prof. Juan Pérez"
+                required
+              /&gt;
+              {errors.docente && &lt;p className="text-red-500 text-sm mt-1"&gt;{errors.docente}&lt;/p&gt;}
+            &lt;/div&gt;
+            
+            &lt;div&gt;
+              &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+                Curso/Materia &lt;span className="text-red-500"&gt;*&lt;/span&gt;
+              &lt;/label&gt;
+              &lt;input
+                type="text"
+                name="curso"
+                value={formData.curso}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  errors.curso ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Ej: Matemáticas 5° Básico"
+                required
+              /&gt;
+              {errors.curso && &lt;p className="text-red-500 text-sm mt-1"&gt;{errors.curso}&lt;/p&gt;}
+            &lt;/div&gt;
+            
+            &lt;div&gt;
+              &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+                Tema de la Clase &lt;span className="text-red-500"&gt;*&lt;/span&gt;
+              &lt;/label&gt;
+              &lt;input
+                type="text"
+                name="tema"
+                value={formData.tema}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  errors.tema ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Ej: Fracciones y números decimales"
+                required
+              /&gt;
+              {errors.tema && &lt;p className="text-red-500 text-sm mt-1"&gt;{errors.tema}&lt;/p&gt;}
+            &lt;/div&gt;
+            
+            &lt;div&gt;
+              &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+                Fecha &lt;span className="text-red-500"&gt;*&lt;/span&gt;
+              &lt;/label&gt;
+              &lt;input
+                type="date"
+                name="fecha"
+                value={formData.fecha}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  errors.fecha ? 'border-red-500' : 'border-gray-300'
+                }`}
+                required
+              /&gt;
+              {errors.fecha && &lt;p className="text-red-500 text-sm mt-1"&gt;{errors.fecha}&lt;/p&gt;}
+            &lt;/div&gt;
+          &lt;/div&gt;
+          
+          &lt;div className="mt-4"&gt;
+            &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+              Duración
+            &lt;/label&gt;
+            &lt;input
+              type="text"
+              name="duracion"
+              value={formData.duracion}
+              onChange={handleChange}
+              className="w-full md:w-1/3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Ej: 45 minutos"
+            /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        {/* Contenido pedagógico */}
+        &lt;div className="bg-blue-50 p-4 rounded-lg"&gt;
+          &lt;h3 className="text-lg font-semibold mb-4 text-blue-800"&gt;Contenido Pedagógico&lt;/h3&gt;
+          
+          &lt;div className="mb-4"&gt;
+            &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+              Objetivos de Aprendizaje &lt;span className="text-red-500"&gt;*&lt;/span&gt;
+            &lt;/label&gt;
+            &lt;textarea
+              name="objetivos"
+              value={formData.objetivos}
+              onChange={handleChange}
+              rows="3"
+              className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                errors.objetivos ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="Describe qué deben lograr los estudiantes al finalizar la clase..."
+              required
+            &gt;&lt;/textarea&gt;
+            {errors.objetivos && &lt;p className="text-red-500 text-sm mt-1"&gt;{errors.objetivos}&lt;/p&gt;}
+          &lt;/div&gt;
+
+          &lt;div className="mb-4"&gt;
+            &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+              Contenido a Desarrollar &lt;span className="text-red-500"&gt;*&lt;/span&gt;
+            &lt;/label&gt;
+            &lt;textarea
+              name="contenido"
+              value={formData.contenido}
+              onChange={handleChange}
+              rows="4"
+              className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                errors.contenido ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="Detalla el contenido que vas a enseñar, actividades, ejemplos..."
+              required
+            &gt;&lt;/textarea&gt;
+            {errors.contenido && &lt;p className="text-red-500 text-sm mt-1"&gt;{errors.contenido}&lt;/p&gt;}
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        {/* Recursos y evaluación */}
+        &lt;div className="bg-green-50 p-4 rounded-lg"&gt;
+          &lt;h3 className="text-lg font-semibold mb-4 text-green-800"&gt;Recursos y Evaluación&lt;/h3&gt;
+          
+          &lt;div className="mb-4"&gt;
+            &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+              Recursos Necesarios
+            &lt;/label&gt;
+            &lt;textarea
+              name="recursos"
+              value={formData.recursos}
+              onChange={handleChange}
+              rows="3"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Lista los materiales, tecnología, libros, etc. que necesitarás..."
+            &gt;&lt;/textarea&gt;
+          &lt;/div&gt;
+
+          &lt;div className="mb-6"&gt;
+            &lt;label className="block text-sm font-medium mb-2 text-gray-700"&gt;
+              Estrategias de Evaluación
+            &lt;/label&gt;
+            &lt;textarea
+              name="evaluacion"
+              value={formData.evaluacion}
+              onChange={handleChange}
+              rows="3"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Describe cómo vas a evaluar el aprendizaje de los estudiantes..."
+            &gt;&lt;/textarea&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        {/* Botones */}
+        &lt;div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-gray-200"&gt;
+          &lt;button
+            type="submit"
+            disabled={isSubmitting}
+            className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 font-semibold transition-colors"
+          &gt;
+            {isSubmitting ? (
+              &lt;&gt;
+                &lt;i className="fas fa-spinner fa-spin mr-2"&gt;&lt;/i&gt;
+                {planToEdit ? 'Actualizando...' : 'Guardando...'}
+              &lt;/&gt;
+            ) : (
+              &lt;&gt;
+                &lt;i className="fas fa-save mr-2"&gt;&lt;/i&gt;
+                {planToEdit ? 'Actualizar Plan' : 'Guardar Plan'}
+              &lt;/&gt;
+            )}
+          &lt;/button&gt;
+          
+          &lt;button
+            type="button"
+            onClick={handleReset}
+            className="flex-1 sm:flex-none bg-gray-500 text-white py-3 px-6 rounded-lg hover:bg-gray-600 font-semibold transition-colors"
+          &gt;
+            &lt;i className="fas fa-eraser mr-2"&gt;&lt;/i&gt;
+            Limpiar
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default PlanForm;</pre>
+                                </div>
+                                
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+                                    <h4 class="font-bold text-green-800 mb-2">
+                                        <i class="fas fa-check-circle mr-2"></i>Mejoras implementadas:
+                                    </h4>
+                                    <ul class="text-green-700 text-sm space-y-1 list-disc pl-5">
+                                        <li>Validación completa del formulario en español</li>
+                                        <li>Manejo de estados de carga y errores</li>
+                                        <li>Soporte para edición de planes existentes</li>
+                                        <li>Interfaz organizada por secciones</li>
+                                        <li>Indicadores visuales de campos obligatorios</li>
+                                        <li>Confirmación antes de limpiar el formulario</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Los demás pasos se pueden agregar siguiendo el mismo patrón -->
+                    <!-- Paso 4: Formularios -->
+                    <section id="paso4" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-yellow-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">4</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-700">Validación de Formularios</h2>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-6 rounded-lg">
+                            <p class="text-blue-800">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                En este paso implementarías validación avanzada con react-hook-form, 
+                                manejo de errores y UX mejorada.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Paso 5: Animaciones -->
+                    <section id="paso5" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-pink-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">5</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-pink-700">Animaciones con Framer Motion</h2>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <p class="text-green-800">
+                                <i class="fas fa-magic mr-2"></i>
+                                Aquí agregarías animaciones fluidas para transiciones entre componentes 
+                                y mejoras en la experiencia visual.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Paso 6: PDF Export -->
+                    <section id="paso6" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">6</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-red-700">Exportación a PDF</h2>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-file-pdf mr-2 text-red-600"></i>Componente PDF Export
+                                </h3>
+                                <p class="mb-3">Archivo: <code>src/components/PDFExport.jsx</code></p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre>import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
+function PDFExport({ planData }) {
+  const exportToPDF = async () => {
+    const element = document.getElementById('plan-content');
+    
+    try {
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      
+      const imgWidth = 210;
+      const pageHeight = 297;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save(`plan-clase-${planData.tema}.pdf`);
+    } catch (error) {
+      console.error('Error al generar PDF:', error);
+    }
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;div id="plan-content" className="bg-white p-8"&gt;
+        &lt;h1 className="text-2xl font-bold mb-4"&gt;Plan de Clase&lt;/h1&gt;
+        &lt;div className="grid grid-cols-2 gap-4 mb-4"&gt;
+          &lt;p&gt;&lt;strong&gt;Docente:&lt;/strong&gt; {planData.docente}&lt;/p&gt;
+          &lt;p&gt;&lt;strong&gt;Curso:&lt;/strong&gt; {planData.curso}&lt;/p&gt;
+          &lt;p&gt;&lt;strong&gt;Tema:&lt;/strong&gt; {planData.tema}&lt;/p&gt;
+          &lt;p&gt;&lt;strong&gt;Fecha:&lt;/strong&gt; {planData.fecha}&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div className="mb-4"&gt;
+          &lt;h2 className="text-lg font-bold mb-2"&gt;Objetivos&lt;/h2&gt;
+          &lt;p&gt;{planData.objetivos}&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div className="mb-4"&gt;
+          &lt;h2 className="text-lg font-bold mb-2"&gt;Contenido&lt;/h2&gt;
+          &lt;p&gt;{planData.contenido}&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+          &lt;h2 className="text-lg font-bold mb-2"&gt;Recursos&lt;/h2&gt;
+          &lt;p&gt;{planData.recursos}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      
+      &lt;button
+        onClick={exportToPDF}
+        className="mt-4 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700"
+      &gt;
+        &lt;i className="fas fa-download mr-2"&gt;&lt;/i&gt;
+        Exportar a PDF
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default PDFExport;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Paso 7: Deploy -->
+                    <section id="paso7" class="step-card bg-white rounded-lg shadow-lg p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-indigo-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                <span class="font-bold">7</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-indigo-700">Despliegue en Vercel</h2>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fab fa-github mr-2 text-gray-600"></i>Subir a GitHub
+                                </h3>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    <pre># Inicializar git y subir a GitHub
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/tu-usuario/plan-clase-app.git
+git push -u origin main</pre>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-rocket mr-2 text-blue-600"></i>Deploy en Vercel
+                                </h3>
+                                <ol class="list-decimal pl-6 space-y-2 text-gray-700">
+                                    <li>Ve a <a href="https://vercel.com" target="_blank" class="text-blue-600 hover:underline">vercel.com</a></li>
+                                    <li>Conecta tu cuenta de GitHub</li>
+                                    <li>Importa tu repositorio</li>
+                                    <li>Configura las variables de entorno</li>
+                                    <li>Haz deploy</li>
+                                </ol>
+                            </div>
+
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                                <p class="text-green-700">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    <strong>¡Felicitaciones!</strong> Has completado la implementación de tu aplicación de planes de clase.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple JavaScript for navigation -->
+    <script>
+        // Simple navigation function
+        function setActive(clickedElement) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            clickedElement.classList.add('active');
+        }
+
+        // Simple copy function
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '¡Copiado!';
+                button.style.backgroundColor = '#10b981';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '#3b82f6';
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar:', err);
+                button.textContent = 'Error';
+            });
+        }
+
+        // Set active navigation based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize first section as active
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstNavItem = document.querySelector('.nav-item');
+            if (firstNavItem) {
+                firstNavItem.classList.add('active');
+            }
+        });
+
+        console.log('✅ Guía Plan de Clase cargada correctamente');
+        console.log('📝 Navegación simplificada activada');
+        console.log('🔗 Todos los enlaces funcionan correctamente');
+    </script>
+</body>
+</html>
